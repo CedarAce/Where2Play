@@ -3,28 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Where 2 Play - Find your next game</title>
+    <title>Where 2 Play</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <main>
-    <style>
-        body {
-            background-image: url("game banner 2.jpg");
-            background-repeat: no-repeat;
-            background-size: cover; /* Add this line */
-            color: #ffffff;
-            height: 20vh; /* Add this line to set a fixed height */
-        }
-    </style>
-    <h1 style="text-align: center;">Where 2 Play</h1>
-    <h2 style="text-align: center;">AI-powered search engine, for your subscribed games</h2>
-    <form id="searchForm" style="display: flex; justify-content: center;">
-        <label>
-            <input id="searchInput" type="text" name="search" placeholder="Enter game name..." style="margin-bottom: 100px;">
-            <input type="submit" value="Search">
-        </label>
-    </form>
-</main>
+    <h1>Welcome to Where 2 Play</h1>
+    <div id="search">
+        <label for="searchField">Search:</label><br>
+        <input type="text" id="searchField">
+        <button id="searchButton">Lookup</button>    
+    </div>
+
+    <div id="results">
+        <h2>Results:</h2>
+        <ul id="resultsList">
+            <li>Game 1</li>
+            <li>Game 2</li>
+            <li>Game 3</li>            
+        </ul>
+    
 </body>
 </html>
