@@ -7,7 +7,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -34,10 +34,10 @@
 
     <main class="main-content">
         <div class="grid-header">
-            <h2 id="resultsCount">Loading games...</h2>
+            <h2 id="resultsCount">Featured Games</h2>
         </div>
         <div id="games-grid" class="games-grid">
-            <!-- Game cards will be injected here -->
+            <!-- Game cards will be injected here by app.js -->
         </div>
         <div id="loading-spinner" class="spinner"></div>
     </main>
@@ -54,6 +54,6 @@
 
     <!-- PapaParse for CSV parsing -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script type="module" src="app.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>

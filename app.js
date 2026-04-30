@@ -12,16 +12,26 @@ const gameModal = document.getElementById('gameModal');
 const closeModalBtn = document.getElementById('closeModal');
 const modalBody = document.getElementById('modalBody');
 
-// Mock Data for Playstation to fulfill the filter requirement
-const mockPlaystationGames = [
-    { Game: "God of War Ragnarök", System: "Playstation", Release: "Nov-22", Metacritic: "94", Genre: "Action-Adventure" },
-    { Game: "The Last of Us Part II", System: "Playstation", Release: "Jun-20", Metacritic: "93", Genre: "Action-Adventure" },
-    { Game: "Spider-Man 2", System: "Playstation", Release: "Oct-23", Metacritic: "90", Genre: "Action-Adventure" },
-    { Game: "Ghost of Tsushima", System: "Playstation", Release: "Jul-20", Metacritic: "83", Genre: "Action-Adventure" },
-    { Game: "Horizon Forbidden West", System: "Playstation", Release: "Feb-22", Metacritic: "88", Genre: "Action / Role-Playing" }
+// Rich Mock Data for immediate display and functional filtering
+const mockGames = [
+    { Game: "Halo Infinite", System: "Xbox PC", Release: "2021", Metacritic: "87", Genre: "First-Person Shooter" },
+    { Game: "Ghost of Tsushima", System: "Playstation", Release: "2020", Metacritic: "83", Genre: "Action-Adventure" },
+    { Game: "Cyberpunk 2077", System: "PC Xbox Playstation", Release: "2020", Metacritic: "86", Genre: "RPG" },
+    { Game: "Forza Horizon 5", System: "Xbox PC", Release: "2021", Metacritic: "92", Genre: "Racing" },
+    { Game: "God of War Ragnarök", System: "Playstation", Release: "2022", Metacritic: "94", Genre: "Action-Adventure" },
+    { Game: "Starfield", System: "Xbox PC", Release: "2023", Metacritic: "83", Genre: "Action RPG" },
+    { Game: "Spider-Man 2", System: "Playstation", Release: "2023", Metacritic: "90", Genre: "Action-Adventure" },
+    { Game: "Microsoft Flight Simulator", System: "Xbox PC", Release: "2020", Metacritic: "91", Genre: "Simulation" }
 ];
 
 async function init() {
+    // 1. Instantly load mock games so the UI is immediately interactive
+    allGames = [...mockGames];
+    filteredGames = [...allGames];
+    renderGames();
+    setupEventListeners();
+
+    // 2. Attempt to fetch real CSV data
     try {
         const response = await fetch('data/xboxgames.csv');
         if (!response.ok) throw new Error('Failed to fetch CSV');
@@ -31,22 +41,20 @@ async function init() {
             header: true,
             skipEmptyLines: true,
             complete: function(results) {
-                // Filter out empty rows or games without names
                 const parsedGames = results.data.filter(row => row.Game);
-                
-                // Add our mock Playstation games
-                allGames = [...parsedGames, ...mockPlaystationGames];
+                // We keep the mock Playstation games since the CSV is Xbox only
+                const playstationMocks = mockGames.filter(g => g.System === "Playstation");
+                allGames = [...parsedGames, ...playstationMocks];
                 filteredGames = [...allGames];
                 
                 loadingSpinner.style.display = 'none';
                 renderGames();
-                setupEventListeners();
             }
         });
     } catch (error) {
-        console.error("Error loading games:", error);
-        resultsCount.textContent = "Error loading games. Please make sure you are running a local server.";
+        console.error("Using offline mock data. CSV fetch failed:", error);
         loadingSpinner.style.display = 'none';
+        resultsCount.textContent = `Showing 8 Featured Games (Offline Mode)`;
     }
 }
 
@@ -91,17 +99,30 @@ function renderGames() {
         const release = game.Release || 'Unknown';
         const genre = game.Genre || 'Various';
 
+        // Pick a random unsplash gaming image for the placeholder
+        const placeholderImages = [
+            'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1605901309584-818e25960b8f?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80'
+        ];
+        const randomImage = placeholderImages[Math.floor(Math.random() * placeholderImages.length)];
+
         card.innerHTML = `
-            <div class="card-header">
-                <h3 class="game-title">${game.Game}</h3>
-                <div class="metascore ${scoreClass}">${scoreText}</div>
-            </div>
-            <div class="card-meta">
-                <span>${release}</span>
-                <span>${genre.split('/')[0].trim()}</span>
-            </div>
-            <div class="card-footer">
-                ${tagsHtml}
+            <div class="card-image" style="background-image: url('${randomImage}')"></div>
+            <div class="card-content">
+                <div class="card-header">
+                    <h3 class="game-title">${game.Game}</h3>
+                    <div class="metascore ${scoreClass}">${scoreText}</div>
+                </div>
+                <div class="card-meta">
+                    <span>${release}</span>
+                    <span>${genre.split('/')[0].trim()}</span>
+                </div>
+                <div class="card-footer">
+                    ${tagsHtml}
+                </div>
             </div>
         `;
 
