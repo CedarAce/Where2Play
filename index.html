@@ -3,36 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Where 2 Play</title>
+    <title>Where2Play - Find Your Next Game</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Welcome to Where 2 Play</h1>
-    <div id="search">
-        <label for="searchField">Search:</label><br><br>
-        <input type="text" id="searchField">
-        <button id="searchButton">Lookup</button>    
+    <header class="navbar">
+        <div class="nav-container">
+            <h1 class="logo">Where<span>2</span>Play</h1>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search for a game...">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+            <nav class="filters" id="platformFilters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="PC">PC Game Pass</button>
+                <button class="filter-btn" data-filter="Xbox">Xbox Game Pass</button>
+                <button class="filter-btn" data-filter="Playstation">Playstation Plus</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="grid-header">
+            <h2 id="resultsCount">Loading games...</h2>
+        </div>
+        <div id="games-grid" class="games-grid">
+            <!-- Game cards will be injected here -->
+        </div>
+        <div id="loading-spinner" class="spinner"></div>
+    </main>
+
+    <!-- Game Details Modal -->
+    <div id="gameModal" class="modal hidden">
+        <div class="modal-content">
+            <button id="closeModal" class="close-btn">&times;</button>
+            <div id="modalBody">
+                <!-- Modal content injected here -->
+            </div>
+        </div>
     </div>
 
-    <div>
-        <span class="games">
-        <label for="gameTitle">Assassins Creed</label><br>
-        <label for="gameYear">2015</label><br>
-        <label for="gamePlatform">PS4</label><br>
-        <label for="gameGenre">Action</label><br>
-        <label for="gameRating">5</label>
-    </span>
-    </div>
-    <br>
-    <div>
-        <span class="games">
-        <label for="gameTitle">Fallout 4</label><br>
-        <label for="gameYear">2013</label><br>
-        <label for="gamePlatform">PS5</label><br>
-        <label for="gameGenre">Thriller</label><br>
-        <label for="gameRating">8</label>
-    </span>
-    </div>
-
+    <!-- PapaParse for CSV parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script type="module" src="app.js"></script>
 </body>
 </html>
